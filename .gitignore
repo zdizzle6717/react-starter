@@ -35,3 +35,14 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+# Babel
+babel_cache*
+
+# SCSS
+.sass-cache
+
+# Database Connections and Credentials
+envVariables.js
+server/databaseConfig.js
+compiled-server/databaseConfig.js
