@@ -7,7 +7,10 @@ import rootReducer from './reducers';
 
 const loggerMiddleware = createLogger();
 let store, storedUser, preLoadedState;
-let composeEnhancers = compose;
+const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+    }) : compose;
 
 // Grab the state from a global variable injected into the server-generated HTML
 function safelyParse(input) {

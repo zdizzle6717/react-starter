@@ -8,7 +8,6 @@ import Animation from 'react-addons-css-transition-group';
 import {AlertActions} from '../../library/alerts';
 import {Link, withRouter} from 'react-router-dom';
 import {UserActions} from '../../library/authentication';
-import {apiRoutes} from '../../constants/apiBaseRoutes';
 import Menu from './Menu';
 
 const mapStateToProps = (state) => {

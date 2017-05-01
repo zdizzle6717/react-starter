@@ -10,9 +10,12 @@ import {Loader} from '../library/loader';
 import {scrollTo} from '../library/utilities';
 import {UserActions} from '../library/authentication';
 import initInterceptors from '../interceptors';
-import {apiRoutes} from '../constants/apiBaseRoutes';
 import roleConfig from '../../roleConfig';
+import {/*googleAnalyticsKey,*/ baseApiRoute} from '../../envVariables';
+// import ReactGA from 'react-ga';
+// ReactGA.initialize(googleAnalyticsKey);
 const AuthRoute = configureAuthRoute(roleConfig);
+
 
 // Routes
 import TopNav from './pieces/TopNav';
@@ -31,7 +34,7 @@ let _viewListener;
 // TODO: Animation between view change is not working when wrapped around a Switch
 
 // Initialize global interceptors such as 401, 403
-initInterceptors(apiRoutes.dev, 300);
+initInterceptors(baseApiRoute, 300);
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
@@ -54,6 +57,8 @@ class Layout extends React.Component {
 
 	onViewChange(location) {
 		scrollTo(0, 100);
+		// ReactGA.set({ 'page': window.location.pathname });
+		// ReactGA.pageview(window.location.pathname);
 	}
 
     render() {
@@ -65,16 +70,15 @@ class Layout extends React.Component {
 
 				<Animation transitionName="view" transitionAppear={true} transitionAppearTimeout={250} transitionEnter={true} transitionEnterTimeout={250} transitionLeave={true} transitionLeaveTimeout={250} component='div' className='content-container'>
 					<Switch>
-						<Route key={1} location={this.props.location} path="/" exact component={Home}/>
+						<Route location={this.props.location} path="/" exact component={Home}/>
 						<RedirectWithStatus location={this.props.location} status={301} from="/redirect" to="/"/>
-						<Route key={2} location={this.props.location} path="/contacts" component={Contacts}/>
+						<Route location={this.props.location} path="/contacts" component={Contacts}/>
 						<Route location={this.props.location} path="/login" component={Login}/>
 						<Route location={this.props.location} path="/register" component={Register}/>
 						<Route location={this.props.location} path="/providers" component={Providers}/>
 						<AuthRoute access={['siteAdmin']} location={this.props.location} path="/tabs" component={Tabs}/>
 						<Route location={this.props.location} path="/topics" component={Topics}/>
 						<Route location={this.props.location} component={NotFound}/>
-						<Route location={this.props.location} component={Login}/>
 					</Switch>
 				</Animation>
 

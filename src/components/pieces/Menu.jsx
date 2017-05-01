@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {apiRoutes} from '../../constants/apiBaseRoutes';
+import {baseApiRoute} from '../../../envVariables';
 
 export default class Menu extends React.Component {
 	render() {
@@ -20,7 +20,7 @@ export default class Menu extends React.Component {
 							<Link to="/tabs" className="menu-link">Tabs</Link>
 						</li>
 					<li className="">
-						<a href={`${apiRoutes.dev}documentation`} className="menu-link" target="_blank">Api Guide</a>
+						<a href={`${baseApiRoute}documentation`} className="menu-link" target="_blank">Api Guide</a>
 					</li>
 				</ul>
 				<ul className="login-menu">

@@ -5,7 +5,7 @@ import { Server } from 'http';
 import Express from 'express';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { StaticRouter, matchPath } from 'react-router';
+import { StaticRouter, matchPath } from 'react-router-dom';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
@@ -70,5 +70,5 @@ server.listen(port, err => {
     if (err) {
         return console.error(err);
     }
-    console.info(`Server running on ${envVariables.baseUrl}:${port}`);
+    console.info(`Server running at: ${envVariables.baseUrl}:${port}, with process id ${process.pid}`);
 });

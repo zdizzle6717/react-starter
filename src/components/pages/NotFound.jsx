@@ -2,7 +2,7 @@
 
 import React from 'react';
 import render from 'react-dom';
-import Status from '../pieces/Status';
+import {Status} from '../../library/routing';
 
 export default class NotFound extends React.Component {
 	constructor() {
