@@ -7,6 +7,7 @@ import {configureAuthRoute} from '../library/authentication';
 import {RedirectWithStatus} from '../library/routing';
 import {Alerts} from '../library/alerts'
 import {Loader} from '../library/loader';
+import {scrollTo} from '../library/utilities';
 import {UserActions} from '../library/authentication';
 import initInterceptors from '../interceptors';
 import {apiRoutes} from '../constants/apiBaseRoutes';
@@ -25,6 +26,10 @@ import Register from './pages/Register';
 import NotFound from './pages/NotFound';
 import Topics from './pages/Topics';
 
+let _viewListener;
+
+// TODO: Animation between view change is not working when wrapped around a Switch
+
 // Initialize global interceptors such as 401, 403
 initInterceptors(apiRoutes.dev, 300);
 
@@ -37,7 +42,19 @@ const mapDispatchToProps = (dispatch) => {
 class Layout extends React.Component {
 	constructor() {
         super();
+
+		this.onViewChange = this.onViewChange.bind(this);
     }
+
+	componentWillMount() {
+		_viewListener = this.props.history.listen((location, action) => {
+			this.onViewChange(location);
+		});
+	}
+
+	onViewChange(location) {
+		scrollTo(0, 100);
+	}
 
     render() {
 		return (
@@ -48,9 +65,9 @@ class Layout extends React.Component {
 
 				<Animation transitionName="view" transitionAppear={true} transitionAppearTimeout={250} transitionEnter={true} transitionEnterTimeout={250} transitionLeave={true} transitionLeaveTimeout={250} component='div' className='content-container'>
 					<Switch>
-						<Route location={this.props.location} path="/" exact component={Home}/>
+						<Route key={1} location={this.props.location} path="/" exact component={Home}/>
 						<RedirectWithStatus location={this.props.location} status={301} from="/redirect" to="/"/>
-						<Route location={this.props.location} path="/contacts" component={Contacts}/>
+						<Route key={2} location={this.props.location} path="/contacts" component={Contacts}/>
 						<Route location={this.props.location} path="/login" component={Login}/>
 						<Route location={this.props.location} path="/register" component={Register}/>
 						<Route location={this.props.location} path="/providers" component={Providers}/>
@@ -67,6 +84,10 @@ class Layout extends React.Component {
 				<footer>This is the footer.</footer>
 			</div>
 		)
+	}
+
+	componentWillUnmount() {
+		_viewListener();
 	}
 }
 
