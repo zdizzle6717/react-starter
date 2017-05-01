@@ -21,7 +21,7 @@ class Providers extends React.Component {
 	render() {
 		return (
 			<div>
-		      <h2>Providers</h2>
+		      <h1>Providers</h1>
 		    </div>
 		)
 	}

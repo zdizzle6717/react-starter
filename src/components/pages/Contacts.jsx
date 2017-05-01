@@ -21,7 +21,7 @@ class Contacts extends React.Component {
 	render() {
 		return (
 			<div>
-		      <h2>Contacts</h2>
+		      <h1>Contacts</h1>
 		    </div>
 		)
 	}

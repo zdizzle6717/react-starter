@@ -29,7 +29,7 @@ export default class Topics extends React.Component {
 
 		return (
 			<div>
-		      <h2>Topics</h2>
+		      <h1>Topics</h1>
 		      <ul>
 		        <li>
 		          <Link to={`${match.url}/rendering`}>

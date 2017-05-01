@@ -21,7 +21,7 @@ class Tabs extends React.Component {
 	render() {
 		return (
 			<div>
-		      <h2>Tabs</h2>
+		      <h1>Tabs</h1>
 			  {this.props.test}
 		    </div>
 		)
