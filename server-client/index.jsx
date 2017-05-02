@@ -13,6 +13,7 @@ import routeConfig from './routeConfig';
 import rootReducer from '../src/reducers';
 import envVariables from '../envVariables';
 import Layout from '../src/components/Layout';
+import routes from '../src/routes';
 
 // Initialize the server and configure support for handlebars templates
 const app = new Express();
@@ -29,37 +30,52 @@ for (let i in routeConfig) {
     let routeView = routeConfig[i].view;
 
     app.get(routePath, (req, res) => {
+		let promises = [];
 		const context = {};
 		const initialState = {};
-
 		const store = createStore(
 			rootReducer,
 			initialState,
 			applyMiddleware(
-				thunkMiddleware, // let's us dispatch functions
+				thunkMiddleware
 			)
 		);
 
-		const markup = ReactDOMServer.renderToString(
-			<Provider store={store}>
-				<StaticRouter location={req.url} context={context}>
-			      <Layout/>
-			    </StaticRouter>
-			</Provider>
-		)
+		routes.some(route => {
+			const match = matchPath(req.url, route);
+			if (match && route.fetchData) {
+				const Comp = route.component.WrappedComponent
+    			const initData = (Comp && route.fetchData) || (() => Promise.resolve());
+				// fetchData calls a dispatch on the store updating the current state before render
+				promises.push(initData(store));
+			}
+			return match;
+		});
 
-		// TODO: Create a solution to get intial state
-		const state = JSON.stringify({});
+		Promise.all(promises).then(() => {
+			const markup = ReactDOMServer.renderToString(
+				<Provider store={store}>
+					<StaticRouter location={req.url} context={context}>
+				      <Layout/>
+				    </StaticRouter>
+				</Provider>
+			)
 
-		if (context.url) {
-		  // Somewhere a `<Redirect>` was rendered
-		  res.writeHead(context.status, {
-			  'Location': context.url
-		  });
-		  res.end();
-		} else {
-			return res.render(routeView, {markup, state});
-		}
+			// This gets the initial state created after all dispatches are called in fetchData
+			Object.assign(initialState, store.getState());
+
+			const state = JSON.stringify(initialState);
+
+			if (context.url) {
+				console.log('Somewhere a <Redirect> was rendered');
+				res.writeHead(context.status, {
+					'Location': context.url
+				});
+				res.end();
+			} else {
+				return res.render(routeView, {markup, state});
+			}
+		});
 
 	});
 }

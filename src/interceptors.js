@@ -1,6 +1,5 @@
 'use strict';
 
-import {history} from 'history';
 import axios from 'axios';
 import {AlertActions} from './library/alerts';
 import {LoaderActions} from './library/loader';
@@ -11,7 +10,7 @@ let timer;
 let numLoadings = 0;
 let _timeout = 350;
 
-const initInterceptors = (baseUrl = 'http://localhost:8000/api/', timeout = _timeout) => {
+const initInterceptors = (history, baseUrl = 'http://localhost:8000/api/', timeout = _timeout) => {
 
 	// Global axios config
 	axios.defaults.baseURL = baseUrl;
@@ -49,12 +48,12 @@ const initInterceptors = (baseUrl = 'http://localhost:8000/api/', timeout = _tim
 		if (error.response) {
 			if (error.response.status == 401 || error.response.data.statusCode == 401) {
 				store.dispatch(UserActions.logout());
-				AlertActions.addAlert({
+				store.dispatch(AlertActions.addAlert({
 					title: 'Not Authorized',
 					message: 'Redirected: You do not have authorization to view this content or your session has expired. Please login to continue.',
 					type: 'error',
 					delay: 3000
-				});
+				}));
 				history.push('/login');
 			}
 		}

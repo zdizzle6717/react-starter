@@ -7,6 +7,8 @@ import rootReducer from './reducers';
 
 const loggerMiddleware = createLogger();
 let store, storedUser, preLoadedState;
+
+// TODO: Reconfigure redux-devtools
 const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
       // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
@@ -14,17 +16,20 @@ const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_E
 
 // Grab the state from a global variable injected into the server-generated HTML
 function safelyParse(input) {
-  var doc = new DOMParser().parseFromString(input, "text/html");
-  return JSON.parse(doc.documentElement.textContent);
+	if (input) {
+		var doc = new DOMParser().parseFromString(input, 'text/html');
+	  return JSON.parse(doc.documentElement.textContent);
+	} else {
+		console.log('Warning: __PRELOADED_STATE__ is not defined on the respective view');
+		return {};
+	}
 }
 
 // Get stored user details from session storage if they are already logged in
-if(typeof(Storage) !== "undefined" && typeof(window) !== 'undefined') {
+if(typeof(Storage) !== 'undefined' && typeof(window) !== 'undefined') {
 	storedUser = JSON.parse(sessionStorage.getItem('user'));
 	storedUser = storedUser ? storedUser : {};
 	preLoadedState = Object.assign(safelyParse(window.__PRELOADED_STATE__), {'user': storedUser, 'isAuthenticated': !!storedUser.roleConfig});
-	// TODO: Reconfigure redux-devtools
-	// composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 }
 
 if (process.env.NODE_ENV === 'production') {

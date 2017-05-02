@@ -22,8 +22,12 @@ export default [
 		'view': 'providers'
 	},
 	{
-		'route': '/tabs*',
+		'route': '/tabs',
 		'view': 'tabs'
+	},
+	{
+		'route': '/topics*',
+		'view': 'topics'
 	},
 	{
 		'route': '*',

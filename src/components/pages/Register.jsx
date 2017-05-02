@@ -21,7 +21,13 @@ class RegistrationPage extends React.Component {
         super();
 
         this.state = {
-            'credentials': {},
+            'credentials': {
+				'firstName': '',
+				'lastName': '',
+				'email': '',
+				'username': '',
+				'password': ''
+			},
 			'passwordRepeat': ''
         }
 
@@ -49,9 +55,8 @@ class RegistrationPage extends React.Component {
 
 	handleSubmit(e) {
 		this.props.createUser(this.state.credentials).then((response) => {
-			let homeState = this.props.user.roleConfig.homeState;
 			this.showAlert('registrationSuccess');
-			this.props.history.push(homeState);
+			this.props.history.push('/login');
 		}).catch((error) => {
 			console.log(error);
 			if (error.message === 'Username taken') {
@@ -68,9 +73,9 @@ class RegistrationPage extends React.Component {
 			'registrationSuccess': () => {
 				this.props.addAlert({
 					'title': 'Registration Success',
-					'message': 'You have successfully registered an account and were automatically logged in.',
+					'message': 'You have successfully registered an account. Please login to continue.',
 					'type': 'success',
-					'delay': 3000
+					'delay': 4000
 				});
 			},
 			'invalidUsername': () => {
@@ -104,21 +109,21 @@ class RegistrationPage extends React.Component {
 						<div className="row">
 							<div className="form-group small-12 medium-6 columns">
 								<label className="required">First Name</label>
-								<Input type="text" name="firstName" value={this.state.credentials.firstName || ''} handleInputChange={this.handleInputChange} validate="name" required={true} />
+								<Input type="text" name="firstName" value={this.state.credentials.firstName} handleInputChange={this.handleInputChange} validate="name" required={true} />
 							</div>
 							<div className="form-group small-12 medium-6 columns">
 								<label className="required">Last Name</label>
-								<Input type="text" name="lastName" value={this.state.credentials.lastName || ''} handleInputChange={this.handleInputChange} validate="name" required={true} />
+								<Input type="text" name="lastName" value={this.state.credentials.lastName} handleInputChange={this.handleInputChange} validate="name" required={true} />
 							</div>
 						</div>
 						<div className="row">
 							<div className="form-group small-12 medium-6 columns">
 								<label className="required">Email</label>
-								<Input type="text" name="email" value={this.state.credentials.email || ''} handleInputChange={this.handleInputChange} validate="email" required={true} />
+								<Input type="text" name="email" value={this.state.credentials.email} handleInputChange={this.handleInputChange} validate="email" required={true} />
 							</div>
 							<div className="form-group small-12 medium-6 columns">
 								<label className="required">Username</label>
-								<Input type="text" name="username" value={this.state.credentials.username || ''} handleInputChange={this.handleInputChange} validate="username" required={true} />
+								<Input type="text" name="username" value={this.state.credentials.username} handleInputChange={this.handleInputChange} validate="username" required={true} />
 							</div>
 						</div>
 						<label className="required">User Role</label>
@@ -131,13 +136,13 @@ class RegistrationPage extends React.Component {
 						<div className="row">
 							<div className="form-group small-12 columns">
 								<label className="required">Password</label>
-								<Input type="password" name="password" value={this.state.credentials.password || ''} handleInputChange={this.handleInputChange} validate="password" required={true} inputMatch={this.state.passwordRepeat}/>
+								<Input type="password" name="password" value={this.state.credentials.password} handleInputChange={this.handleInputChange} validate="password" required={true} inputMatch={this.state.passwordRepeat}/>
 							</div>
 						</div>
 						<div className="row">
 							<div className="form-group small-12 columns">
 								<label className="required">Repeat Password</label>
-								<Input type="password" name="passwordRepeat" value={this.state.passwordRepeat || ''} handleInputChange={this.handleInputMatch} validate="password" required={true} inputMatch={this.state.credentials.password}/>
+								<Input type="password" name="passwordRepeat" value={this.state.passwordRepeat} handleInputChange={this.handleInputMatch} validate="password" required={true} inputMatch={this.state.credentials.password}/>
 							</div>
 						</div>
 					</Form>

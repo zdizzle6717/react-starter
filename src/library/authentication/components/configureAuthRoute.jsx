@@ -13,15 +13,15 @@ let _redirectPath = '/';
 
 const mapStateToProps = (state) => {
 	return {
-		'currentUser': state.user,
-		'isAuthenticated': state.isAuthenticated
+		'user': state.user,
+		'isAuthenticated': state.isAuthenticated,
+		'routing': state.routing
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-		'addAlert': AlertActions.addAlert,
-		'setRedirect': UserActions.setRedirect,
+		'addAlert': AlertActions.addAlert
     }, dispatch);
 };
 
@@ -45,14 +45,11 @@ function configureAuthRoute(roleConfig) {
 				_redirectPath = '/login';
 				return false;
 			} else {
-				let homeState = this.props.currentUser.roleConfig ? this.props.currentUser.roleConfig.homeState : '/';
-				this.props.setRedirect(homeState);
-				let accessGranted = checkAuthorization(accessLevels, this.props.currentUser, roleConfig);
+				let accessGranted = checkAuthorization(accessLevels, this.props.user, roleConfig);
 				if (accessGranted) {
 					return true;
 				} else {
-					// TODO: Return to previous state
-					_redirectPath = '/';
+					_redirectPath = '/login';
 					setTimeout(() => {
 						this.showAlert('notAuthorized');
 					});
