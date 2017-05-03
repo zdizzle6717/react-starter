@@ -9,15 +9,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch-client": "babel-watch server-client/index.jsx",
-    "start-client": "forever start -c 'node_modules/.bin/babel-node' server-client/index.jsx",
+		"compile-client": "NODE_ENV=production node_modules/.bin/webpack -p --config webpack.client.js",
+    "start-client": "npm run compile-client && pm2 start compiled-client/index.js --name='SandboxClient'",
     "stop-client": "forever stop 'server-client/index.js'",
     "watch-server": "babel-watch server/index.js",
-    "start-server": "babel server --out-dir compiled-server && pm2 start compiled-server/index.js --name='Sandbox3API'",
-    "stop-server": "pm2 stop 'Sandbox3API'",
+		"compile-server": "babel server --out-dir compiled-server",
+    "start-server": "npm run compile-server && pm2 start compiled-server/index.js --name='SandboxAPI'",
+    "stop-server": "pm2 stop 'SandboxAPI'",
+		"style": "node build-style.js",
     "build": "node build-style.js && NODE_ENV=development node_modules/.bin/webpack -d --config webpack.dev.js",
     "build-prod": "node build-style.js && NODE_ENV=production node_modules/.bin/webpack -p --config webpack.prod.js",
-    "deploy": "npm run build-prod && npm run start-server && npm run start-client",
-    "style": "node build-style.js"
+    "deploy": "npm run build-prod && npm run start-server && npm run start-client"
   },
   "dependencies": {
     "attr-accept": "^1.1.0",
@@ -82,6 +84,7 @@
     "pm2": "^2.4.5",
     "postcss": "^5.2.17",
     "sequelize-cli": "^2.7.0",
+    "source-map-support": "^0.4.15",
     "webpack": "^2.4.1"
   }
 }

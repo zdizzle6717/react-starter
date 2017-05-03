@@ -9,9 +9,9 @@ import { StaticRouter, matchPath } from 'react-router-dom';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
+import envVariables from '../envVariables';
 import routeConfig from './routeConfig';
 import rootReducer from '../src/reducers';
-import envVariables from '../envVariables';
 import Layout from '../src/components/Layout';
 import routes from '../src/routes';
 
