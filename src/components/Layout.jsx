@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import Animation from 'react-addons-css-transition-group';
+import {CSSTransitionGroup as Animation} from 'react-transition-group';
 import TopNav from './pieces/TopNav';
 import {configureAuthRoute} from '../library/authentication';
 import {RedirectWithStatus} from '../library/routing';
@@ -84,8 +84,8 @@ class Layout extends React.Component {
 									)
 								}
 							})}
-							<RedirectWithStatus location={this.props.location} from="/redirect" to="/" />
 						</Switch>
+						<RedirectWithStatus location={this.props.location} from="/redirect" to="/" />
 					</Animation>
 
 					<Alerts></Alerts>

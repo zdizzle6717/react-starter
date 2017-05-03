@@ -8,7 +8,6 @@ import rootReducer from './reducers';
 const loggerMiddleware = createLogger();
 let store, storedUser, preLoadedState;
 
-// TODO: Reconfigure redux-devtools
 const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
       // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...

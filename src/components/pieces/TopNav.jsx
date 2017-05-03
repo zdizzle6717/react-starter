@@ -4,7 +4,7 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
-import Animation from 'react-addons-css-transition-group';
+import {CSSTransitionGroup as Animation} from 'react-transition-group';
 import {AlertActions} from '../../library/alerts';
 import {Link, withRouter} from 'react-router-dom';
 import {UserActions} from '../../library/authentication';

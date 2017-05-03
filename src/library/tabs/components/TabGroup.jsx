@@ -2,7 +2,7 @@
 
 import React from 'react';
 import classNames from 'classnames';
-import Animation from 'react-addons-css-transition-group';
+import {CSSTransitionGroup as Animation} from 'react-transition-group';
 import PropTypes from 'prop-types';
 
 export default class TabGroup extends React.Component {
