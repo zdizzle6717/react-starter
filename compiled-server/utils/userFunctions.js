@@ -25,9 +25,9 @@ var _models = require('../models');
 
 var _models2 = _interopRequireDefault(_models);
 
-var _roleconfig = require('../../roleconfig');
+var _roleConfig = require('../../roleConfig');
 
-var _roleconfig2 = _interopRequireDefault(_roleconfig);
+var _roleConfig2 = _interopRequireDefault(_roleConfig);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -157,7 +157,7 @@ var hashPassword = function hashPassword(password, cb) {
 
 var getUserRoleFlags = function getUserRoleFlags(user) {
   var userRoleFlags = 0;
-  _roleconfig2.default.forEach(function (role) {
+  _roleConfig2.default.forEach(function (role) {
     if (user[role.name]) {
       userRoleFlags += role.roleFlags;
     }

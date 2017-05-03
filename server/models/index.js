@@ -3,10 +3,11 @@
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
-import databaseConfig from '../databaseConfig';
+import envVariables from '../../envVariables';
+let dbConfig = envVariables.dbConfig;
 let basename = path.basename(module.filename);
 let env = process.env.NODE_ENV || 'development';
-let config = databaseConfig[env];
+let config = dbConfig[env];
 let db = {};
 
 if (config.use_env_variable) {

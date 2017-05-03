@@ -4,6 +4,8 @@ const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
 
+// TODO: Work out the kinks
+
 let nodeModules = {};
 fs.readdirSync('node_modules')
   .filter(function(x) {
@@ -14,19 +16,20 @@ fs.readdirSync('node_modules')
   });
 
 module.exports = {
-  'entry': path.join(__dirname, 'server-client', 'index.jsx'),
+  'entry': path.join(__dirname, 'server', 'index.js'),
   'output': {
-    'path': path.join(__dirname, 'server-client'),
+    'path': path.join(__dirname, 'server'),
     'filename': 'compiled.js'
   },
 	'node': {
 		'__dirname': true,
+		'__filename': true
 	},
 	'target': 'node',
 	'externals': nodeModules,
   'module': {
     'rules': [{
-			'test': /\.jsx?$/,
+			'test': /\.js?$/,
 			'exclude': /(node_modules)/,
 			'loaders': ['babel-loader']
       },
@@ -36,11 +39,11 @@ module.exports = {
 			}]
   },
   'resolve': {
-    'extensions': ['.json', '.jsx', '.js']
+    'extensions': ['.json', '.js']
   },
 	'plugins': [
 		new webpack.BannerPlugin({
-			'banner': 'require("source-map-support").install();',
+			'banner': `require('source-map-support').install();`,
 			'raw': true,
 			'entryOnly': false
 		})

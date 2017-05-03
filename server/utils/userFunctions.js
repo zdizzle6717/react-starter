@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import env from '../../envVariables';
 import models from '../models';
-import roleConfig from '../../roleconfig';
+import roleConfig from '../../roleConfig';
 
 const verifyUniqueUser = (request, reply) => {
   models.User.find({
