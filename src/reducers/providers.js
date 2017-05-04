@@ -17,8 +17,8 @@ const provider = (state = {}, action) => {
 
 const providers = (state = [], action) => {
 	switch (action.type) {
-		case ProviderConstants.GET_PROVIDERS:
-			return [...action.data];
+		case ProviderConstants.GET_PROVIDERS_SUCCESS:
+			return [...action.providers];
 		case ProviderConstants.CREATE_PROVIDER:
 			return [
 				...state,

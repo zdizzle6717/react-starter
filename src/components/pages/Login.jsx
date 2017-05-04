@@ -43,6 +43,7 @@ class Login extends React.Component {
 
 	componentDidMount() {
 		document.title = "Sandbox | Login";
+		console.log(this.props);
 	}
 
 	handleInputChange(e) {
