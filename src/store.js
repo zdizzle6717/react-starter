@@ -51,8 +51,8 @@ if (process.env.NODE_ENV === 'production') {
 		preLoadedState,
 		composeEnhancers(applyMiddleware(
 			thunkMiddleware, // let's us dispatch functions,
-			sagaMiddleware, // async effects management
-			loggerMiddleware // middleware that logs actions (development only)
+			loggerMiddleware, // middleware that logs actions (development only)
+			sagaMiddleware // async effects management
 		))
 	);
 }
