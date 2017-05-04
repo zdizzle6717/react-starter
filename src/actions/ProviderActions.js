@@ -25,13 +25,12 @@ export default {
 				dispatch(_returnResponse(ProviderConstants.GET_PROVIDER, provider));
 				return provider;
 			});
-		}
+		};
 	},
 	getAll: () => {
-		return (dispatch, getState) => {
-			dispatch(_initiateRequest(ProviderConstants.INITIATE_PROVIDER_REQUEST));
-			return ProviderService.getAll().then((providers) => {
-				dispatch(_returnResponse(ProviderConstants.GET_PROVIDERS, providers));
+		return (dispatch) => {
+			dispatch({
+				'type': ProviderConstants.GET_PROVIDERS
 			});
 		};
 	},
@@ -64,7 +63,7 @@ export default {
 			dispatch({
 				'type': ProviderConstants.FILTER_PROVIDERS,
 				'data': data
-			})
-		}
+			});
+		};
 	}
 };

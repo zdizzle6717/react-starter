@@ -2,10 +2,13 @@
 
 import thunkMiddleware from 'redux-thunk';
 import {createLogger} from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
 import {applyMiddleware, compose, createStore} from 'redux';
 import rootReducer from './reducers';
+import rootSaga from './sagas';
 
 const loggerMiddleware = createLogger();
+const sagaMiddleware = createSagaMiddleware();
 let store, storedUser, preLoadedState;
 
 const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
@@ -37,7 +40,8 @@ if (process.env.NODE_ENV === 'production') {
 		rootReducer,
 		preLoadedState,
 		applyMiddleware(
-			thunkMiddleware
+			thunkMiddleware, // let's us dispatch functions
+			sagaMiddleware // async effects management
 		)
 	);
 } else {
@@ -46,11 +50,14 @@ if (process.env.NODE_ENV === 'production') {
 		rootReducer,
 		preLoadedState,
 		composeEnhancers(applyMiddleware(
-			thunkMiddleware, // let's us dispatch functions
+			thunkMiddleware, // let's us dispatch functions,
+			sagaMiddleware, // async effects management
 			loggerMiddleware // middleware that logs actions (development only)
 		))
 	);
 }
 
+// Run the saga
+sagaMiddleware.run(rootSaga);
 
 export default store;

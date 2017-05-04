@@ -17,8 +17,8 @@ const contact = (state = {}, action) => {
 
 const contacts = (state = [], action) => {
 	switch (action.type) {
-		case ContactConstants.GET_CONTACTS:
-			return [...action.data];
+		case ContactConstants.GET_CONTACTS_SUCCESS:
+			return [...action.contacts];
 		case ContactConstants.CREATE_CONTACT:
 			return [
 				...state,

@@ -25,13 +25,12 @@ export default {
 				dispatch(_returnResponse(ContactConstants.GET_CONTACT, contact));
 				return contact;
 			});
-		}
+		};
 	},
 	getAll: () => {
 		return (dispatch) => {
-			dispatch(_initiateRequest(ContactConstants.INITIATE_CONTACT_REQUEST));
-			return ContactService.getAll().then((contacts) => {
-				dispatch(_returnResponse(ContactConstants.GET_CONTACTS, contacts));
+			dispatch({
+				'type': ContactConstants.GET_CONTACTS
 			});
 		};
 	},
@@ -42,7 +41,7 @@ export default {
 				dispatch(_returnResponse(ContactConstants.GET_CONTACTS, response.results));
 				return response.pagination;
 			});
-		}
+		};
 	},
 	create: (data) => {
 		return (dispatch) => {
@@ -73,7 +72,7 @@ export default {
 			dispatch({
 				'type': ContactConstants.FILTER_CONTACTS,
 				'data': contacts
-			})
-		}
+			});
+		};
 	}
 };
