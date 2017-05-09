@@ -11,9 +11,6 @@ import defaultValidations from '../constants/defaultValidations';
 import FormActions from '../actions/FormActions';
 import {findFormName, getInput} from '../utilities';
 
-// TODO: Initial state value is not always getting set on new forms
-// NOTE: This can be resolved by setting a state value in the parent component state declaration
-
 const mapStateToProps = (state) => {
 	return {
 		'forms': state.forms
@@ -33,7 +30,7 @@ class RadioGroup extends React.Component {
 
 		this.state = {
 			'name': null,
-			'value': '',
+			'value': null,
 			'formName': null,
 			'valid': true,
 			'initial': true,
@@ -59,6 +56,19 @@ class RadioGroup extends React.Component {
 		if (this.state.initial && this.state.pristine && nextProps.value || this.props.required !== nextProps.required) {
 			this.validateInit(nextProps, true);
 		}
+	}
+
+	// TODO: Test if this will work as expected
+	shouldComponentUpdate(nextProps, nextState) {
+		if (nextProps.value !== this.props.value || nextState.value !== this.state.value) {
+			return true;
+		}
+		for (let prop in nextState) {
+			if (nextState[prop] !== this.state[prop]) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// This will update validation in the case that an input is conditionally visible
@@ -97,6 +107,17 @@ class RadioGroup extends React.Component {
 		setTimeout(() => {
 			this.props.addInput(input);
 		});
+		let pseudoEvent = {
+			'target': {
+				'value': input.value,
+				'name': input.name
+			},
+			'currentTarget': {
+				'value': input.value,
+				'name': input.name
+			}
+		};
+		this.props.handleInputChange(pseudoEvent);
 	}
 
 	validateInputChange(option, e) {

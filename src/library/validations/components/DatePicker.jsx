@@ -76,6 +76,18 @@ class DatePicker extends React.Component {
 		}
 	}
 
+	shouldComponentUpdate(nextProps, nextState) {
+		if (nextProps.value !== this.props.value || nextState.value !== this.state.value) {
+			return true;
+		}
+		for (let prop in nextState) {
+			if (nextState[prop] !== this.state[prop]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	// This will update validation in the case that an input is conditionally visible
 	componentWillUnmount() {
 		if (!this.props.preserveState) {

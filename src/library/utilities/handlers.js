@@ -13,8 +13,8 @@ const updateInput = (event, stateObj) => {
 	return stateObj;
 };
 
-const updateRadioButton = (event, name, stateObj) => {
-	stateObj[name] = event.target.value;
+const updateRadioButton = (event, stateObj) => {
+	stateObj[event.target.name] = event.target.value;
 	return stateObj;
 };
 

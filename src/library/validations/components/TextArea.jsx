@@ -56,9 +56,23 @@ class TextArea extends React.Component {
 
 	// Accounts for initial data check and conditionally required inputs
 	componentWillReceiveProps(nextProps) {
-		if (this.state.initial && this.state.pristine && nextProps.value || this.props.required !== nextProps.required) {
-			this.validateInit(nextProps, true);
+		if (this.props.required !== nextProps.required || this.state.initial && this.state.pristine && nextProps.value) {
+			setTimeout(() => {
+				this.validateInit(nextProps, true);
+			});
 		}
+	}
+
+	shouldComponentUpdate(nextProps, nextState) {
+		if (nextProps.value !== this.props.value || nextState.value !== this.state.value) {
+			return true;
+		}
+		for (let prop in nextState) {
+			if (nextState[prop] !== this.state[prop]) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// This will update validation in the case that an input is conditionally visible
