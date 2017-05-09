@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {Link, withRouter} from 'react-router-dom';
 import {AlertActions} from '../../library/alerts';
 import {handlers} from '../../library/utilities';
-import {Form, Input, Select, FileUpload} from '../../library/validations'
+import {Form, CheckBox, RadioGroup, Input, Select, FileUpload} from '../../library/validations'
 import {UserActions} from '../../library/authentication';
 
 const mapDispatchToProps = (dispatch) => {
@@ -31,8 +31,10 @@ class RegistrationPage extends React.Component {
 			'passwordRepeat': ''
         }
 
-		this.handleInputMatch = this.handleInputMatch.bind(this);
+		this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleInputMatch = this.handleInputMatch.bind(this);
+		this.handleRadioButtonChange = this.handleRadioButtonChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.showAlert = this.showAlert.bind(this);
     }
@@ -47,9 +49,21 @@ class RegistrationPage extends React.Component {
 		})
 	}
 
+	handleCheckBoxChange(e) {
+		this.setState({
+			'credentials': handlers.updateCheckBox(e, this.state.credentials)
+		});
+	}
+
 	handleInputChange(e) {
 		this.setState({
 			'credentials': handlers.updateInput(e, this.state.credentials)
+		});
+	}
+
+	handleRadioButtonChange(e) {
+		this.setState({
+			'credentials': handlers.updateRadioButton(e, this.state.credentials)
 		});
 	}
 
@@ -124,6 +138,14 @@ class RegistrationPage extends React.Component {
 							<div className="form-group small-12 medium-6 columns">
 								<label className="required">Username</label>
 								<Input type="text" name="username" value={this.state.credentials.username} handleInputChange={this.handleInputChange} validate="username" required={true} />
+							</div>
+						</div>
+						<div className="row">
+							<div className="form-group small-12 medium-6 columns">
+								<RadioGroup name="testRadio" value={this.state.credentials.testRadio} label="testRadio" options={['abc', 'def', 'ghi']} handleInputChange={this.handleRadioButtonChange} required={true} />
+							</div>
+							<div className="form-group small-12 medium-6 columns">
+								<CheckBox name="testCheckBox" value={this.state.credentials.testCheckBox} handleInputChange={this.handleCheckBoxChange} label="Test Checkbox" />
 							</div>
 						</div>
 						<label className="required">User Role</label>

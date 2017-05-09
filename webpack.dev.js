@@ -8,6 +8,7 @@ module.exports = {
 		'filename': 'app.js',
 		'sourceMapFilename': 'app.map'
 	},
+	'devtool': '#source-map',
 	'module': {
 		'rules': [{
 				'test': /\.jsx?$/,
@@ -29,6 +30,8 @@ module.exports = {
 		}),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.optimize.UglifyJsPlugin({
+			'beautify': true,
+			'dead_code': true,
 			'compress': {
 				'warnings': false,
 				'keep_fnames': true
@@ -36,9 +39,7 @@ module.exports = {
 			'mangle': {
 				'keep_fnames': true
 			},
-			'sourcemap': true,
-			'beautify': true,
-			'dead_code': true
+			'sourceMap': true
 		})
 	]
 };
