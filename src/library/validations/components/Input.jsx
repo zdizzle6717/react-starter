@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import defaultValidations from '../constants/defaultValidations';
 import FormActions from '../actions/FormActions';
-import {addErrorMessage, removeErrorMessage, getInput} from '../utilities';
+import {addErrorMessage, removeErrorMessage, getInput, findFormName} from '../utilities';
 
 //TODO: Make sure input gets set to dirty on first character change/user input
 
@@ -80,7 +80,7 @@ class Input extends React.Component {
 	// these checks account for the async delay and prevent race conditions
 	validateInit(props, propsHaveLoaded = false) {
 		let elem = ReactDOM.findDOMNode(this);
-		let formName = elem.closest('.form').getAttribute('name');
+		let formName = findFormName(elem);
 		let existingInput = propsHaveLoaded ? false : getInput(props.forms, formName, props.name);
 		if (existingInput) {
 			this.setState(existingInput);

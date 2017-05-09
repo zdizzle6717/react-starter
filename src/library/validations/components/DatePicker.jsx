@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import defaultValidations from '../constants/defaultValidations';
 import classNames from 'classnames';
 import FormActions from '../actions/FormActions';
-import {getInput, range} from '../utilities';
+import {findFormName, getInput, range} from '../utilities';
 
 // TODO: Add error checking and make sure validation is working
 
@@ -91,7 +91,7 @@ class DatePicker extends React.Component {
 
 	validateInit(props, propsHaveLoaded = false) {
 		let elem = ReactDOM.findDOMNode(this);
-		let formName = elem.closest('.form').getAttribute('name');
+		let formName = findFormName(elem);
 		let existingInput = propsHaveLoaded ? false : getInput(props.forms, formName, props.name);
 		if (existingInput) {
 			this.setState(existingInput);

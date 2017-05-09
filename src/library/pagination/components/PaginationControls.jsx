@@ -3,6 +3,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import {scrollTo} from '../../utilities';
 
 export default class PaginationControls extends React.Component {
 	constructor() {
@@ -50,6 +51,7 @@ export default class PaginationControls extends React.Component {
 
 		if (pageNumber !== this.state.currentPage) {
 			this.props.handlePageChange(pageNumber);
+			scrollTo(0, 150);
 			this.setState({
 				'currentPage': pageNumber
 			});

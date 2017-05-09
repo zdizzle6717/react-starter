@@ -9,7 +9,7 @@ import accepts from 'attr-accept';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import FormActions from '../actions/FormActions';
-import {addErrorMessage, removeErrorMessage, getInput, range} from '../utilities';
+import {addErrorMessage, findFormName, removeErrorMessage, getInput, range} from '../utilities';
 
 // TODO: Drag & Drop functionality
 // TODO: Consider allowing for single file as object, NOT array
@@ -98,7 +98,7 @@ class FileUpload extends React.Component {
 	// This checks the validation of any input containing data on first render
 	validateInit(props, propsHaveLoaded = false) {
 		let elem = ReactDOM.findDOMNode(this);
-		let formName = elem.closest('.form').getAttribute('name');
+		let formName = findFormName(elem);
 		let existingInput = propsHaveLoaded ? false : getInput(props.forms, formName, props.name);
 		if (existingInput) {
 			this.setState(existingInput);

@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import defaultValidations from '../constants/defaultValidations'
 import FormActions from '../actions/FormActions';
-import {getInput} from '../utilities';
+import {findFormName, getInput} from '../utilities';
 
 const mapStateToProps = (state) => {
 	return {
@@ -73,7 +73,7 @@ class CheckBox extends React.Component {
 
 	validateInit(props, propsHaveLoaded = false) {
 		let elem = ReactDOM.findDOMNode(this);
-		let formName = elem.closest('.form').getAttribute('name');
+		let formName = findFormName(elem);
 		let existingInput = propsHaveLoaded ? false : getInput(props.forms, formName, props.name);
 		if (existingInput) {
 			this.setState(existingInput);

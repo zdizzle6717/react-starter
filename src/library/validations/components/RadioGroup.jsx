@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import defaultValidations from '../constants/defaultValidations';
 import FormActions from '../actions/FormActions';
-import {getInput} from '../utilities';
+import {findFormName, getInput} from '../utilities';
 
 // TODO: Initial state value is not always getting set on new forms
 // NOTE: This can be resolved by setting a state value in the parent component state declaration
@@ -76,7 +76,7 @@ class RadioGroup extends React.Component {
 
 	validateInit(props, propsHaveLoaded = false) {
 		let elem = ReactDOM.findDOMNode(this);
-		let formName = elem.closest('.form').getAttribute('name');
+		let formName = findFormName(elem);
 		let existingInput = propsHaveLoaded ? false : getInput(props.forms, formName, props.name);
 		if (existingInput) {
 			this.setState(existingInput);

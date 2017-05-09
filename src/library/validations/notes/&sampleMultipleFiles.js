@@ -30,8 +30,8 @@ function uploadFiles(files) {
 				}
 			}
 		data.append('file', file);
-		data.set('path', 'contacts/');
-		data.set('fileSize', file.size);
+		data.append('path', 'contacts/');
+		data.append('fileSize', file.size);
 		promises.push(axios.post('/files', data, config));
 	});
 
