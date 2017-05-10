@@ -21,12 +21,6 @@ let _viewListener;
 
 // TODO: Animation between view change is not working when wrapped around a Switch
 
-const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({
-		'setUser': UserActions.setUser
-	}, dispatch);
-}
-
 class Layout extends React.Component {
 	constructor() {
         super();
@@ -111,4 +105,4 @@ class Layout extends React.Component {
 	}
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(Layout));
+export default withRouter(Layout);
