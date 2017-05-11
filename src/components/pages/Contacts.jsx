@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {Link, withRouter} from 'react-router-dom';
+import ContactService from '../../services/ContactService';
 
 class Contacts extends React.Component {
 	constructor() {
@@ -16,6 +17,7 @@ class Contacts extends React.Component {
 
 	componentDidMount() {
 		document.title = "Sandbox | Contacts";
+		ContactService.getAll();
 	}
 
 	render() {
