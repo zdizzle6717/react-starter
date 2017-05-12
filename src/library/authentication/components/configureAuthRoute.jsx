@@ -43,7 +43,7 @@ function configureAuthRoute(roleConfig) {
 				setTimeout(() => {
 					this.showAlert('notAuthenticated');
 				});
-				this.props.setRedirect(this.props.path);
+				this.props.setRedirect(this.props.history.location.pathname);
 				_redirectPath = '/login';
 				return false;
 			} else {
@@ -51,7 +51,7 @@ function configureAuthRoute(roleConfig) {
 				if (accessGranted) {
 					return true;
 				} else {
-					this.props.setRedirect(this.props.path);
+					this.props.setRedirect(this.props.history.location.pathname);
 					_redirectPath = this.props.customRedirect || '/login';
 					setTimeout(() => {
 						this.showAlert('notAuthorized');
