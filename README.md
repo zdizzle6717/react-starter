@@ -74,12 +74,14 @@ module.exports = {
 4. Install postgres on your OS, create a database and add username, password, database, host to /envVariables.js
 5. To utilize gmail autoresponse, configure nodemailer and add the respective config to /envVariables.js (https://nodemailer.com/usage/using-gmail/)
 
-* `sudo npm install pm2 -g`
+* `npm install` OR `yarn install`
 
-* `sudo npm run build-prod`
+* `npm install pm2 -g` OR `yarn global add pm2`
 
-* `sudo npm run start-server`
+* `npm run build-prod`
 
-* `sudo npm run start-client`
+* `npm run start-server`
+
+* `npm run start-client`
 
 > navigate to localhost:3000 or the clientPort defined in envVariables.js
